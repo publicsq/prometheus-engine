@@ -19,6 +19,6 @@ COPY . ./
 FROM buildbase as appbase
 RUN CGO_ENABLED=0 go build -mod=vendor -o datasource-syncer cmd/datasource-syncer/*.go
 
-FROM gcr.io/distroless/static-debian11:latest
-COPY --from=appbase /app/datasource-syncer /bin/datasource-syncer
-ENTRYPOINT ["/bin/datasource-syncer"]
+FROM gcr.io/google/debian11:latest
+COPY --from=appbase /app/datasource-syncer /usr/local/bin/datasource-syncer
+ENTRYPOINT ["/usr/local/bin/datasource-syncer"]
